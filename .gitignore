@@ -33,3 +33,6 @@ data/snapshots/*
 # Keep folder structure
 !data/videos/.gitkeep
 !data/snapshots/.gitkeep
+
+models/*.pt
+!models/.gitkeep
