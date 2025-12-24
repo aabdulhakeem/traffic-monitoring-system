@@ -33,3 +33,11 @@ AREA = np.array([
 # Reference Y-coordinates for entry/exit logic
 AREA_TOP_Y = 494
 AREA_BOTTOM_Y = 475
+
+# Restricted area
+RESTRICTED_AREA = np.array([
+    (112, 388),
+    (395, 377),
+    (343, 453),
+    (90, 453)
+])
