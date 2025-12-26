@@ -16,10 +16,7 @@ CREATE TABLE IF NOT EXISTS traffic_counts (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- =========================
--- 2. Restricted Area Violations
--- =========================
-CREATE TABLE IF NOT EXISTS restricted_area_violations (
+CREATE TABLE IF NOT EXISTS traffic_violations (
     id SERIAL PRIMARY KEY,
 
     source_id TEXT NOT NULL,
@@ -28,29 +25,12 @@ CREATE TABLE IF NOT EXISTS restricted_area_violations (
     object_id INTEGER NOT NULL,
     vehicle_type TEXT,
 
-    snapshot_path TEXT NOT NULL,
-
-    violation_time TIMESTAMP NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- =========================
--- 3. Wrong-Way Violations
--- =========================
-CREATE TABLE IF NOT EXISTS wrong_way_violations (
-    id SERIAL PRIMARY KEY,
-
-    source_id TEXT NOT NULL,
-    source_type TEXT NOT NULL,
-
-    object_id INTEGER NOT NULL,
-    vehicle_type TEXT,
-
-    entry_line_id TEXT,
-    exit_line_id TEXT,
+    violation_type TEXT NOT NULL,
+    -- 'restricted_area' | 'wrong_way'
 
     snapshot_path TEXT NOT NULL,
-
     violation_time TIMESTAMP NOT NULL,
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+-- =========================
