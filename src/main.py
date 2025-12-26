@@ -7,6 +7,7 @@ from vision.geometry import compute_centers, point_inside_area
 from vision.area_counter import AreaCounter
 from utils.drawing import *
 
+
 def main():
     # =========================
     # Initialize components
@@ -22,9 +23,17 @@ def main():
     if not cap.isOpened():
         raise RuntimeError(f"Failed to open video: {VIDEO_PATH}")
 
-    # =========================
-    # Main loop
-    # =========================
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+    out = cv2.VideoWriter(
+        f"{OUTPUT_DIR}/vichle count.mp4",
+        cv2.VideoWriter_fourcc(*"mp4v"),
+        fps,
+        (width, height)
+    )
+
     while True:
         ret, frame = cap.read()
         if not ret:
@@ -33,7 +42,6 @@ def main():
         results = detector.track(frame)
         annotated_frame = frame.copy()
 
-        # Draw counting area
         draw_area(annotated_frame, AREA)
 
         for r in results:
@@ -47,20 +55,11 @@ def main():
             for (cx, cy), obj_id in zip(centers, ids):
                 cx, cy = int(cx), int(cy)
 
-                # Decide center color (inside / outside area)
                 inside = point_inside_area(cx, cy, AREA)
                 color = (0, 255, 0) if inside else (0, 0, 255)
 
-                # Draw center point
-                cv2.circle(
-                    annotated_frame,
-                    (cx, cy),
-                    5,
-                    color,
-                    -1
-                )
+                cv2.circle(annotated_frame, (cx, cy), 5, color, -1)
 
-                # Draw object ID
                 draw_text_with_bg(
                     annotated_frame,
                     text=str(obj_id),
@@ -68,26 +67,18 @@ def main():
                     y=cy - 10,
                 )
 
-                # Area-based counting logic
                 counter.process(obj_id, cx, cy)
 
-        # Draw counters
         draw_overlay_info(
             annotated_frame,
             up_count=counter.up_count,
             down_count=counter.down_count,
         )
 
-        cv2.imshow("Area-Based Vehicle Counting", annotated_frame)
+        out.write(annotated_frame)
 
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
-
-    # =========================
-    # Cleanup
-    # =========================
     cap.release()
-    cv2.destroyAllWindows()
+    out.release()
 
 
 if __name__ == "__main__":
