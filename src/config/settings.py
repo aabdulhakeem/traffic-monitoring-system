@@ -14,6 +14,8 @@ VIDEO_PATH = os.getenv("VIDEO_PATH")
 if VIDEO_PATH is None:
     raise ValueError("VIDEO_PATH must be set in the .env file")
 
+OUTPUT_DIR = os.getenv("OUTPUT_DIR", "output.mp4")
+
 # YOLO v11 default model (can be overridden via .env)
 MODEL_PATH = os.getenv("MODEL_PATH", "yolo11n.pt")
 
