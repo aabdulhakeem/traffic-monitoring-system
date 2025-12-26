@@ -19,16 +19,18 @@ CREATE TABLE IF NOT EXISTS traffic_counts (
 -- =========================
 -- 2. Restricted Area Violations
 -- =========================
-CREATE TABLE IF NOT EXISTS area_violations (
+CREATE TABLE IF NOT EXISTS restricted_area_violations (
     id SERIAL PRIMARY KEY,
 
-    source_id TEXT NOT NULL,               -- camera or video
-    vehicle_type TEXT NOT NULL,            -- car, bus, truck, motorcycle
-    area_name TEXT NOT NULL,               -- restricted zone name
+    source_id TEXT NOT NULL,
+    source_type TEXT NOT NULL,
+
+    object_id INTEGER NOT NULL,
+    vehicle_type TEXT,
+
+    snapshot_path TEXT NOT NULL,
 
     violation_time TIMESTAMP NOT NULL,
-    snapshot_path TEXT NOT NULL,           -- path to saved image
-
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -38,12 +40,17 @@ CREATE TABLE IF NOT EXISTS area_violations (
 CREATE TABLE IF NOT EXISTS wrong_way_violations (
     id SERIAL PRIMARY KEY,
 
-    source_id TEXT NOT NULL,               -- camera or video
-    vehicle_type TEXT NOT NULL,            -- car, bus, truck, motorcycle
+    source_id TEXT NOT NULL,
+    source_type TEXT NOT NULL,
 
-    violation_time TIMESTAMP NOT NULL,
+    object_id INTEGER NOT NULL,
+    vehicle_type TEXT,
+
+    entry_line_id TEXT,
+    exit_line_id TEXT,
+
     snapshot_path TEXT NOT NULL,
 
+    violation_time TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
