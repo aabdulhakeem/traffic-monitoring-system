@@ -1,7 +1,7 @@
 import os
 import numpy as np
 from dotenv import load_dotenv
-
+from typing import Tuple
 # Load environment variables from .env
 load_dotenv()
 
@@ -66,3 +66,6 @@ RESTRICTED_AREA = np.array([
     (343, 453),
     (90, 453)
 ])
+
+Point = Tuple[int, int]
+Line = Tuple[Point, Point]
