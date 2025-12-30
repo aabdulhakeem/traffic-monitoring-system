@@ -1,4 +1,4 @@
-from vision.geometry import point_inside_area
+from src.vision.geometry import point_inside_area
 
 
 class AreaCounter:

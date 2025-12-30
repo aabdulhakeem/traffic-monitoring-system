@@ -1,6 +1,6 @@
 from typing import Dict, Set, Tuple
-from config.settings import Line
-from vision.geometry import has_crossed_line
+from src.config.settings import Line
+from src.vision.geometry import has_crossed_line
 
 
 class WrongWayMonitor:

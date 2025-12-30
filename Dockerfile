@@ -29,4 +29,4 @@ COPY .env .
 # =========================
 # Run application
 # =========================
-CMD ["python", "src/main.py"]
+CMD ["sh", "-c", "python -m ${MAIN_MODULE}"]

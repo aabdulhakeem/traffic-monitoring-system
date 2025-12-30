@@ -1,6 +1,6 @@
 import cv2
 from typing import Tuple
-from config.settings import Point, Line
+from src.config.settings import Point, Line
 
 # =========================
 # Overlay text
