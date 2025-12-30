@@ -54,3 +54,4 @@ class TrafficViolationRepository:
                 "violation_time": violation_time,
             },
         )
+        self.db.commit()

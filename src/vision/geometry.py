@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from typing import Tuple
-from config.settings import Point, Line
+from src.config.settings import Point, Line
 
 def point_inside_area(x: int, y: int, area: np.ndarray) -> bool:
     """

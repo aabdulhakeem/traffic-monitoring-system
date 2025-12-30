@@ -1,6 +1,6 @@
 import smtplib
 from email.message import EmailMessage
-from config.settings import (
+from src.config.settings import (
     SMTP_HOST,
     SMTP_PORT,
     SMTP_USER,
