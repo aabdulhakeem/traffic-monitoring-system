@@ -14,7 +14,14 @@ VIDEO_PATH = os.getenv("VIDEO_PATH")
 if VIDEO_PATH is None:
     raise ValueError("VIDEO_PATH must be set in the .env file")
 
-OUTPUT_DIR = os.getenv("OUTPUT_DIR", "output.mp4")
+WRONG_WAY_VIDEO_PATH = os.getenv("WRONG_WAY_VIDEO_PATH")
+if WRONG_WAY_VIDEO_PATH is None:
+    raise ValueError("WRONG_WAY_VIDEO_PATH must be set in the .env file")
+
+
+VIDEOS_OUTPUT_DIR = os.getenv("VIDEOS_OUTPUT_DIR", "output.mp4")
+SNAPSHOTS_OUTPUT_DIR = os.getenv("SNAPSHOTS_OUTPUT_DIR", "snapshots")
+
 
 # YOLO v11 default model (can be overridden via .env)
 MODEL_PATH = os.getenv("MODEL_PATH", "yolo11n.pt")
@@ -56,16 +63,44 @@ AREA = np.array([
 ])
 
 # Reference Y-coordinates for entry/exit logic
-AREA_TOP_Y = 494
-AREA_BOTTOM_Y = 475
+ENTRY_LINE = np.array([[347, 596], [958, 596]])
+EXIT_LINE = np.array([[155, 689], [897, 710]])
 
 # Restricted area
 RESTRICTED_AREA = np.array([
-    (112, 388),
-    (395, 377),
-    (343, 453),
-    (90, 453)
+    [1, 492], 
+    [469, 171], 
+    [303, 133], 
+    [3, 266]
+    ])
+
+VIDEO1_ROI_POLYGON = np.array([
+    [361, 232], 
+    [859, 237], 
+    [1050, 320], 
+    [1275, 547], 
+    [1275, 709], 
+    [9, 714], 
+    [3, 12]
 ])
+
+VIDEO2_ROI_POLYGON = np.array([
+    [361, 580], 
+    [1785, 453], 
+    [1903, 968], 
+    [5, 977], 
+    [2, 733],
+    ])
+
 
 Point = Tuple[int, int]
 Line = Tuple[Point, Point]
+
+WINDOW_DURATION_SECONDS = 30  # 0.5 minute windows
+
+VEHICLE_TYPES = {
+    2: "car",
+    3: "motorcycle",
+    5: "bus",
+    7: "truck",
+}
