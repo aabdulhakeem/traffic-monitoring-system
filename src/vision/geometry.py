@@ -39,3 +39,14 @@ def has_crossed_line(
     curr_side = side_of_line(curr_point, line)
 
     return prev_side * curr_side < 0
+
+
+def apply_polygon_mask(frame, polygon):
+    """
+    Mask everything outside the given polygon.
+    """
+    mask = np.zeros(frame.shape[:2], dtype=np.uint8)
+    cv2.fillPoly(mask, [polygon], 255)
+
+    masked = cv2.bitwise_and(frame, frame, mask=mask)
+    return masked
