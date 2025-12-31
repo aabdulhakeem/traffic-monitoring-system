@@ -29,7 +29,12 @@ Thumbs.db
 # =========================
 data/videos/*
 data/snapshots/*
+data/output_videos/*
 
 # Keep folder structure
 !data/videos/.gitkeep
 !data/snapshots/.gitkeep
+!data/output_videos/.gitkeep
+
+models/*.pt
+!models/.gitkeep

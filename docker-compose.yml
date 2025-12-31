@@ -1,0 +1,43 @@
+services:
+  # =========================
+  # PostgreSQL Database
+  # =========================
+  db:
+    image: postgres:15
+    container_name: traffic_db
+    restart: always
+
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      TZ: Africa/Cairo 
+
+    ports:
+      - "${DB_PORT}:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+  # =========================
+  # Python Application
+  # =========================
+  app:
+    build: .
+    container_name: traffic_app
+    depends_on:
+      - db
+      
+    env_file:
+      - .env
+
+    environment:
+      - TZ=Africa/Cairo
+
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+
+volumes:
+  postgres_data:
